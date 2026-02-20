@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using TradeEngine.Domain.Enums;
+
+namespace TradeEngine.Domain.Entities
+{
+    public class Trade
+    {
+        public Guid Id { get; set; }
+
+        public Guid OrderId { get; set; }
+
+        public Guid AccountId { get; set; }
+
+        public string AssetSymbol { get; set; } = string.Empty;
+
+        public int Quantity { get; set; }
+
+        public decimal ExecutionPrice { get; set; }
+
+        public TradeStatus Status { get; set; }
+
+        public DateTime ExecutedAt { get; set; }
+    }
+}

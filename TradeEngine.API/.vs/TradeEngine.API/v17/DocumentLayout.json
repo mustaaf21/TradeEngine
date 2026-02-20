@@ -1,0 +1,160 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Mustafeez\\source\\TradeEngine\\TradeEngine.API\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{42626244-B011-4F74-ADE0-DCA47ABE46E0}|..\\TradeEngine.Infrastructure\\TradeEngine.Infrastructure.csproj|c:\\users\\mustafeez\\source\\tradeengine\\tradeengine.infrastructure\\persistence\\tradeenginedbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{42626244-B011-4F74-ADE0-DCA47ABE46E0}|..\\TradeEngine.Infrastructure\\TradeEngine.Infrastructure.csproj|c:\\users\\mustafeez\\source\\tradeengine\\tradeengine.infrastructure\\migrations\\20260220060317_addcoretradingentities.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{42626244-B011-4F74-ADE0-DCA47ABE46E0}|..\\TradeEngine.Infrastructure\\TradeEngine.Infrastructure.csproj|c:\\users\\mustafeez\\source\\tradeengine\\tradeengine.infrastructure\\migrations\\tradeenginedbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{40516103-076B-4618-8E24-E83B50754225}|..\\TradeEngine.Domain\\TradeEngine.Domain.csproj|c:\\users\\mustafeez\\source\\tradeengine\\tradeengine.domain\\entities\\auditlog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{40516103-076B-4618-8E24-E83B50754225}|..\\TradeEngine.Domain\\TradeEngine.Domain.csproj|c:\\users\\mustafeez\\source\\tradeengine\\tradeengine.domain\\entities\\position.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{40516103-076B-4618-8E24-E83B50754225}|..\\TradeEngine.Domain\\TradeEngine.Domain.csproj|c:\\users\\mustafeez\\source\\tradeengine\\tradeengine.domain\\entities\\ledgerentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{40516103-076B-4618-8E24-E83B50754225}|..\\TradeEngine.Domain\\TradeEngine.Domain.csproj|c:\\users\\mustafeez\\source\\tradeengine\\tradeengine.domain\\entities\\account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{40516103-076B-4618-8E24-E83B50754225}|..\\TradeEngine.Domain\\TradeEngine.Domain.csproj|c:\\users\\mustafeez\\source\\tradeengine\\tradeengine.domain\\entities\\trade.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{40516103-076B-4618-8E24-E83B50754225}|..\\TradeEngine.Domain\\TradeEngine.Domain.csproj|c:\\users\\mustafeez\\source\\tradeengine\\tradeengine.domain\\entities\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "20260220060317_AddCoreTradingEntities.cs",
+              "DocumentMoniker": "C:\\Users\\Mustafeez\\source\\TradeEngine\\TradeEngine.Infrastructure\\Migrations\\20260220060317_AddCoreTradingEntities.cs",
+              "RelativeDocumentMoniker": "..\\TradeEngine.Infrastructure\\Migrations\\20260220060317_AddCoreTradingEntities.cs",
+              "ToolTip": "C:\\Users\\Mustafeez\\source\\TradeEngine\\TradeEngine.Infrastructure\\Migrations\\20260220060317_AddCoreTradingEntities.cs",
+              "RelativeToolTip": "..\\TradeEngine.Infrastructure\\Migrations\\20260220060317_AddCoreTradingEntities.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-20T06:03:18.263Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "TradeEngineDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\Mustafeez\\source\\TradeEngine\\TradeEngine.Infrastructure\\Persistence\\TradeEngineDbContext.cs",
+              "RelativeDocumentMoniker": "..\\TradeEngine.Infrastructure\\Persistence\\TradeEngineDbContext.cs",
+              "ToolTip": "C:\\Users\\Mustafeez\\source\\TradeEngine\\TradeEngine.Infrastructure\\Persistence\\TradeEngineDbContext.cs",
+              "RelativeToolTip": "..\\TradeEngine.Infrastructure\\Persistence\\TradeEngineDbContext.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAQwA8AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-20T06:00:33.944Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TradeEngineDbContextModelSnapshot.cs",
+              "DocumentMoniker": "C:\\Users\\Mustafeez\\source\\TradeEngine\\TradeEngine.Infrastructure\\Migrations\\TradeEngineDbContextModelSnapshot.cs",
+              "RelativeDocumentMoniker": "..\\TradeEngine.Infrastructure\\Migrations\\TradeEngineDbContextModelSnapshot.cs",
+              "ToolTip": "C:\\Users\\Mustafeez\\source\\TradeEngine\\TradeEngine.Infrastructure\\Migrations\\TradeEngineDbContextModelSnapshot.cs",
+              "RelativeToolTip": "..\\TradeEngine.Infrastructure\\Migrations\\TradeEngineDbContextModelSnapshot.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-20T06:00:11.588Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AuditLog.cs",
+              "DocumentMoniker": "C:\\Users\\Mustafeez\\source\\TradeEngine\\TradeEngine.Domain\\Entities\\AuditLog.cs",
+              "RelativeDocumentMoniker": "..\\TradeEngine.Domain\\Entities\\AuditLog.cs",
+              "ToolTip": "C:\\Users\\Mustafeez\\source\\TradeEngine\\TradeEngine.Domain\\Entities\\AuditLog.cs",
+              "RelativeToolTip": "..\\TradeEngine.Domain\\Entities\\AuditLog.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAA5wBIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-20T05:59:17.755Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Position.cs",
+              "DocumentMoniker": "C:\\Users\\Mustafeez\\source\\TradeEngine\\TradeEngine.Domain\\Entities\\Position.cs",
+              "RelativeDocumentMoniker": "..\\TradeEngine.Domain\\Entities\\Position.cs",
+              "ToolTip": "C:\\Users\\Mustafeez\\source\\TradeEngine\\TradeEngine.Domain\\Entities\\Position.cs",
+              "RelativeToolTip": "..\\TradeEngine.Domain\\Entities\\Position.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-20T05:58:59.663Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "LedgerEntry.cs",
+              "DocumentMoniker": "C:\\Users\\Mustafeez\\source\\TradeEngine\\TradeEngine.Domain\\Entities\\LedgerEntry.cs",
+              "RelativeDocumentMoniker": "..\\TradeEngine.Domain\\Entities\\LedgerEntry.cs",
+              "ToolTip": "C:\\Users\\Mustafeez\\source\\TradeEngine\\TradeEngine.Domain\\Entities\\LedgerEntry.cs",
+              "RelativeToolTip": "..\\TradeEngine.Domain\\Entities\\LedgerEntry.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAzwBYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-20T05:58:35.507Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Trade.cs",
+              "DocumentMoniker": "C:\\Users\\Mustafeez\\source\\TradeEngine\\TradeEngine.Domain\\Entities\\Trade.cs",
+              "RelativeDocumentMoniker": "..\\TradeEngine.Domain\\Entities\\Trade.cs",
+              "ToolTip": "C:\\Users\\Mustafeez\\source\\TradeEngine\\TradeEngine.Domain\\Entities\\Trade.cs",
+              "RelativeToolTip": "..\\TradeEngine.Domain\\Entities\\Trade.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAADwvxwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-20T05:58:07.952Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Order.cs",
+              "DocumentMoniker": "C:\\Users\\Mustafeez\\source\\TradeEngine\\TradeEngine.Domain\\Entities\\Order.cs",
+              "RelativeDocumentMoniker": "..\\TradeEngine.Domain\\Entities\\Order.cs",
+              "ToolTip": "C:\\Users\\Mustafeez\\source\\TradeEngine\\TradeEngine.Domain\\Entities\\Order.cs",
+              "RelativeToolTip": "..\\TradeEngine.Domain\\Entities\\Order.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAUwBgAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-20T05:57:23.655Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Account.cs",
+              "DocumentMoniker": "C:\\Users\\Mustafeez\\source\\TradeEngine\\TradeEngine.Domain\\Entities\\Account.cs",
+              "RelativeDocumentMoniker": "..\\TradeEngine.Domain\\Entities\\Account.cs",
+              "ToolTip": "C:\\Users\\Mustafeez\\source\\TradeEngine\\TradeEngine.Domain\\Entities\\Account.cs",
+              "RelativeToolTip": "..\\TradeEngine.Domain\\Entities\\Account.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-19T10:26:33.031Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
