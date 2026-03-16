@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TradeEngine.Application.DTOs;
 using TradeEngine.Application.Interfaces;
 using TradeEngine.Domain.Enums;
@@ -7,6 +8,7 @@ namespace TradeEngine.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class OrdersController : ControllerBase
     {
         private readonly IOrderService _orderService;
