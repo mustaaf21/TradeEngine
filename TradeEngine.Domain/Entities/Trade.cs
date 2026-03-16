@@ -18,12 +18,24 @@ namespace TradeEngine.Domain.Entities
 
         public string AssetSymbol { get; set; } = string.Empty;
 
+        public OrderSide Side { get; set; }
+
         public int Quantity { get; set; }
 
         public decimal ExecutionPrice { get; set; }
 
+        public decimal TotalValue => Quantity * ExecutionPrice;
+
         public TradeStatus Status { get; set; }
 
         public DateTime ExecutedAt { get; set; }
+
+        public DateTime? SettledAt { get; set; }
+
+        public void MarkAsSettled()
+        {
+            Status = TradeStatus.Settled;
+            SettledAt = DateTime.UtcNow;
+        }
     }
 }

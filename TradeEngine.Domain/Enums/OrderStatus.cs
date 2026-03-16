@@ -9,14 +9,9 @@ namespace TradeEngine.Domain.Enums
     public enum OrderStatus
     {
         Created = 1,
-        Executed = 2,
-        Settled = 3,
-        Cancelled = 4
-    }
-
-    public enum TradeStatus
-    {
-        Executed = 1,
-        Settled = 2
+        PartiallyFilled = 2,
+        Executed = 3,
+        Settled = 4,
+        Cancelled = 5
     }
 }
