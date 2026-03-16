@@ -18,3 +18,22 @@ obj/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Build artifacts
+*.dll
+*.exe
+*.pdb
+*.ilk
+*.exp
+*.lib
+*.iobj
+*.ipdb
+
+# NuGet
+*.nupkg
+packages/
+.nuget/
+
+# Publish output
+publish/
+out/
