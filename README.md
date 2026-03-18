@@ -1,234 +1,259 @@
-# 🏦 TradeEngine
+# TradeEngine API
 
-A **production-grade backend trading engine** built with **.NET 8, ASP.NET Core Web API, SQL Server, and Entity Framework Core**, following **Clean Architecture** and **Domain-Driven Design (DDD)** principles.
+A production-style backend trading engine built with **.NET 8, ASP.NET Core, SQL Server, and Entity Framework Core**, following **Clean Architecture** principles.
 
-## 🎯 Overview
+Supports the full trading lifecycle — account management, order placement, price-time priority matching, T+1 settlement, and portfolio analytics — secured with JWT authentication and rate limiting.
 
-TradeEngine simulates a financial trading platform with complete support for:
+> Built as a personal project to demonstrate financial systems design patterns outside of insurance billing work.
 
-- **Account Management** - Create accounts, deposits, balance tracking
-- **Order Management** - Buy/Sell orders, Market/Limit/Stop orders
-- **Trade Execution** - Matching engine with order book
-- **Position Tracking** - Real-time portfolio positions with average cost
-- **Ledger Accounting** - Double-entry bookkeeping for financial integrity
-- **Settlement** - T+1 settlement simulation
-- **Analytics** - PnL calculation, portfolio valuation
+---
 
-## 🏗️ Architecture
+## Architecture
+
+The solution is split into 4 independent projects with strict inward dependency flow:
 
 ```
-TradeEngine/
-├── TradeEngine.API/              # Presentation Layer (Controllers, Middleware)
-├── TradeEngine.Application/      # Application Layer (DTOs, Interfaces)
-├── TradeEngine.Domain/           # Domain Layer (Entities, Enums, Exceptions)
-└── TradeEngine.Infrastructure/   # Infrastructure Layer (EF Core, Services)
+TradeEngine.API              → Presentation layer (Controllers, Middleware, Program.cs)
+TradeEngine.Application      → Contracts layer (Interfaces, DTOs)
+TradeEngine.Infrastructure   → Implementation layer (Services, DbContext, Migrations)
+TradeEngine.Domain           → Core layer (Entities, Enums, Exceptions)
 ```
 
-### Dependency Flow
+**Dependency rule:** each layer only depends on the layer directly below it. The Domain layer has zero external dependencies — pure business logic.
+
 ```
-API → Application → Domain
-         ↓
-   Infrastructure
+API  →  Application  →  Domain
+              ↑
+       Infrastructure
 ```
 
-**Domain layer has zero dependencies** - pure business logic.
+---
 
-## ✨ Features
-
-### Core Trading
-- ✅ **Buy & Sell Orders** - Place limit orders with price
-- ✅ **Market Orders** - Execute immediately at best price
-- ✅ **Stop Loss Orders** - Trigger when price reaches threshold
-- ✅ **Order Cancellation** - Cancel open orders, release frozen funds
-- ✅ **Order Matching Engine** - Price-time priority matching
-- ✅ **Order Book** - Real-time bid/ask aggregation
-
-### Financial Operations
-- ✅ **Fund Freezing** - Lock funds when placing buy orders
-- ✅ **Position Management** - Track holdings with average cost basis
-- ✅ **Ledger Entries** - Complete audit trail of all transactions
-- ✅ **T+1 Settlement** - Simulated settlement cycle
-
-### Analytics
-- ✅ **Realized P&L** - Profit/loss from closed positions
-- ✅ **Unrealized P&L** - Mark-to-market valuation
-- ✅ **Portfolio Summary** - Total value, cash, positions
-- ✅ **Ledger Statements** - Transaction history with running balance
-
-### Security
-- ✅ **JWT Authentication** - Secure token-based auth
-- ✅ **Password Hashing** - PBKDF2 with SHA256
-- ✅ **Rate Limiting** - Prevent API abuse
-- ✅ **Optimistic Concurrency** - RowVersion for race conditions
-
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Layer | Technology |
-|-------|------------|
-| Framework | .NET 8, ASP.NET Core |
-| Database | SQL Server, EF Core 8 |
-| Authentication | JWT Bearer Tokens |
-| Documentation | Swagger/OpenAPI |
-| Architecture | Clean Architecture, DDD |
+|---|---|
+| Framework | .NET 8, ASP.NET Core Web API |
+| Database | SQL Server, Entity Framework Core 8 |
+| Authentication | JWT Bearer + Refresh Token Rotation |
+| Password Security | PBKDF2-SHA256, 100K iterations |
+| Background Services | IHostedService (T+1 settlement worker) |
+| Rate Limiting | ASP.NET Core built-in rate limiter |
+| API Docs | Swagger / OpenAPI |
+| Concurrency | Optimistic concurrency (RowVersion) |
 
-## 🚀 Getting Started
+---
+
+## Features
+
+### Trading
+- Buy and sell limit orders with fund freezing on placement
+- Market orders — execute immediately at best available price
+- Stop Loss and Stop Limit orders — trigger on price threshold
+- Price-time priority order matching engine
+- Real-time order book with bid/ask aggregation
+- Order cancellation with automatic fund release
+
+### Financial Operations
+- Double-entry ledger — every financial event writes a debit/credit entry
+- Position tracking with weighted average cost basis
+- T+1 settlement via background worker running hourly
+- Full audit trail across all transactions
+
+### Analytics
+- Realized P&L from closed positions
+- Unrealized P&L with mark-to-market valuation
+- Portfolio summary — total value, cash balance, position weights
+- Ledger statements with running balance and optional date filtering
+
+### Security
+- JWT access tokens (15 min) with refresh token rotation
+- Refresh tokens revoked on use and on logout
+- PBKDF2-SHA256 password hashing with random salt and timing-safe comparison
+- Global rate limit: 100 requests/min
+- Trading endpoint rate limit: 30 requests/min
+- Idempotency keys on orders to prevent duplicate submissions
+
+---
+
+## Getting Started
 
 ### Prerequisites
 - .NET 8 SDK
 - SQL Server (LocalDB or full instance)
+- Visual Studio 2022 or VS Code
 
 ### Setup
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/TradeEngine.git
+git clone https://github.com/mustaaf21/TradeEngine.git
 cd TradeEngine
 ```
 
-2. **Update connection string** in `appsettings.json`
+2. **Configure User Secrets** (never put secrets in appsettings.json)
+
+Right-click `TradeEngine.API` in Visual Studio → Manage User Secrets, then add:
 ```json
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=TradeEngineDb;Trusted_Connection=True;"
+    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=TradeEngineDb;Trusted_Connection=True;TrustServerCertificate=True;"
+  },
+  "Jwt": {
+    "Key": "your-secret-key-min-32-characters-long",
+    "Issuer": "TradeEngine",
+    "Audience": "TradeEngineUsers",
+    "AccessTokenExpirationMinutes": "15",
+    "RefreshTokenExpirationDays": "7"
   }
 }
 ```
 
 3. **Run migrations**
-```bash
-cd TradeEngine.API/WebApplication1
-dotnet ef database update
+
+In Visual Studio Package Manager Console:
+```powershell
+Update-Database -Project TradeEngine.Infrastructure -StartupProject TradeEngine.API
 ```
 
 4. **Run the application**
 ```bash
-dotnet run
+dotnet run --project TradeEngine.API/WebApplication1
 ```
 
-5. **Open Swagger UI** at `https://localhost:5001`
+5. **Open Swagger UI**
+```
+https://localhost:7130/swagger
+```
 
-## 📡 API Endpoints
+---
+
+## API Reference
 
 ### Authentication
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/auth/login` | Login and get JWT token |
-| POST | `/api/auth/refresh` | Refresh access token |
-| POST | `/api/auth/logout` | Revoke refresh tokens |
+| Method | Endpoint | Auth | Description |
+|---|---|---|---|
+| POST | `/api/auth/login` | No | Login, returns access + refresh token |
+| POST | `/api/auth/refresh` | No | Rotate refresh token |
+| POST | `/api/auth/logout` | Yes | Revoke all refresh tokens |
 
 ### Accounts
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/accounts` | Create new account |
-| GET | `/api/accounts/{id}` | Get account details |
-| POST | `/api/accounts/{id}/deposit` | Deposit funds |
+| Method | Endpoint | Auth | Description |
+|---|---|---|---|
+| POST | `/api/accounts` | No | Create account |
+| GET | `/api/accounts/{id}` | Yes | Get account details and balance |
+| POST | `/api/accounts/{id}/deposit` | Yes | Deposit funds |
 
 ### Orders
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/orders/buy` | Place buy order |
-| POST | `/api/orders/sell` | Place sell order |
-| POST | `/api/orders/{id}/execute` | Execute order |
-| POST | `/api/orders/{id}/cancel` | Cancel order |
-| GET | `/api/orders/{id}` | Get order details |
-| GET | `/api/orders/account/{accountId}` | Get account orders |
-| GET | `/api/orders/account/{accountId}/trades` | Get trade history |
-| GET | `/api/orders/account/{accountId}/positions` | Get positions |
+| Method | Endpoint | Auth | Description |
+|---|---|---|---|
+| POST | `/api/orders/buy` | Yes | Place buy order |
+| POST | `/api/orders/sell` | Yes | Place sell order |
+| POST | `/api/orders/{id}/execute` | Yes | Execute order directly |
+| POST | `/api/orders/{id}/cancel` | Yes | Cancel order, release frozen funds |
+| GET | `/api/orders/{id}` | Yes | Get order details |
+| GET | `/api/orders/account/{id}` | Yes | Get all orders for account |
+| GET | `/api/orders/account/{id}/trades` | Yes | Get trade history |
+| GET | `/api/orders/account/{id}/positions` | Yes | Get current positions |
 
 ### Market
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/market/orderbook/{symbol}` | Get order book |
-| GET | `/api/market/price/{symbol}` | Get current price |
-| POST | `/api/market/match/{orderId}` | Match order against book |
+| Method | Endpoint | Auth | Description |
+|---|---|---|---|
+| GET | `/api/market/orderbook/{symbol}` | No | Get live order book |
+| GET | `/api/market/price/{symbol}` | No | Get current price |
+| POST | `/api/market/match/{orderId}` | Yes | Match order against book |
+| POST | `/api/market/price/{symbol}` | Yes | Set price (demo use) |
 
 ### Analytics
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/analytics/account/{id}/pnl` | Get P&L report |
-| GET | `/api/analytics/account/{id}/portfolio` | Get portfolio summary |
-| GET | `/api/analytics/account/{id}/ledger` | Get ledger statement |
+| Method | Endpoint | Auth | Description |
+|---|---|---|---|
+| GET | `/api/analytics/account/{id}/pnl` | Yes | Realized + unrealized P&L |
+| GET | `/api/analytics/account/{id}/portfolio` | Yes | Portfolio summary with weights |
+| GET | `/api/analytics/account/{id}/ledger` | Yes | Ledger statement (supports ?from=&to=) |
 
 ### Settlement
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/settlement/trade/{tradeId}` | Settle trade |
-| POST | `/api/settlement/process-pending` | Process all pending |
-| GET | `/api/settlement/pending` | Get pending settlements |
+| Method | Endpoint | Auth | Description |
+|---|---|---|---|
+| POST | `/api/settlement/trade/{tradeId}` | Yes | Settle a specific trade |
+| POST | `/api/settlement/process-pending` | Yes | Batch settle all eligible trades |
+| GET | `/api/settlement/pending` | Yes | List unsettled trades |
 
-## 🧩 Design Patterns
+---
 
-| Pattern | Implementation |
-|---------|----------------|
-| **Clean Architecture** | Layered separation of concerns |
-| **Domain-Driven Design** | Rich domain entities with behavior |
-| **Repository Pattern** | EF Core DbContext as repository |
-| **Unit of Work** | EF Core transaction management |
-| **Service Layer** | Business workflow orchestration |
-| **Dependency Injection** | ASP.NET Core DI container |
+## How a Trade Works
 
-## 💰 Financial Integrity
+```
+1. Create account          POST /api/accounts
+2. Deposit funds           POST /api/accounts/{id}/deposit
+3. Login                   POST /api/auth/login  →  copy accessToken
+4. Authorize               Swagger: Authorize → Bearer <token>
+5. Place buy order         POST /api/orders/buy  →  funds frozen
+6. Place sell order        POST /api/orders/sell (second account)
+7. Match orders            POST /api/market/match/{orderId}
+8. Check analytics         GET  /api/analytics/account/{id}/portfolio
+9. Settlement (auto)       Background worker runs hourly after T+1
+```
 
-### Ledger-Based Accounting
-Every financial movement is recorded in the ledger with debit/credit entries.
+---
+
+## Financial Design
 
 ### Fund Freezing
-Buy orders freeze funds immediately, preventing overspending:
+When a buy order is placed, the required funds are frozen immediately:
 ```
-Available Balance = Balance - Frozen Balance
+Available Balance = Total Balance - Frozen Balance
 ```
+On execution, frozen funds are unfrozen and deducted. On cancellation, frozen funds are released.
 
-### Transaction Safety
-All critical operations are wrapped in database transactions with rollback on failure.
-
-### State Machine
-Orders follow a strict state machine:
+### Order State Machine
 ```
 Created → PartiallyFilled → Executed → Settled
-    ↓
- Cancelled
+    └──────── Cancelled
 ```
 
-## 🔒 Security Features
+### Double-Entry Ledger
+Every financial movement creates a ledger entry:
 
-### Password Security
-- PBKDF2 with SHA256
-- 100,000 iterations
-- Random salt per password
+| Event | Debit | Credit |
+|---|---|---|
+| Deposit | 0 | amount |
+| Buy trade | trade value | 0 |
+| Sell trade | 0 | trade value |
+| Settlement | 0 | 0 (record only) |
 
-### JWT Tokens
-- Short-lived access tokens (15 min)
-- Refresh token rotation
-- Token revocation on logout
+### Optimistic Concurrency
+Account, Order, and Position entities use SQL Server `rowversion` columns. EF Core includes the version in every UPDATE — if another transaction modified the record first, a `DbUpdateConcurrencyException` is thrown and returns HTTP 409.
 
-### Rate Limiting
-- 100 requests/minute global
-- 30 requests/minute for trading endpoints
+---
 
-## 📊 Domain Model
+## Project Structure
 
 ```
-Account ──┬── Orders ──── Trades
-          │
-          ├── Positions
-          │
-          └── LedgerEntries
+TradeEngine.Domain/
+├── Entities/          Account, Order, Trade, Position, LedgerEntry, RefreshToken
+├── Enums/             OrderSide, OrderType, OrderStatus, TradeStatus
+└── Exceptions/        AccountNotFoundException, InsufficientFundsException, ...
+
+TradeEngine.Application/
+├── Interfaces/        IAccountService, IOrderService, IMatchingEngine, ...
+└── DTOs/              CreateAccountRequest, PlaceOrderRequest, LoginRequest
+
+TradeEngine.Infrastructure/
+├── Persistence/       TradeEngineDbContext
+├── Service/           AccountService, OrderService, MatchingEngine, AuthService,
+│                      SettlementService, AnalyticsService, PriceService,
+│                      SettlementBackgroundService
+└── Migrations/
+
+TradeEngine.API/
+├── Controllers/       AccountsController, OrdersController, MarketController,
+│                      AuthController, AnalyticsController, SettlementController
+├── Middlewares/       ExceptionMiddleware
+└── Program.cs
 ```
 
-## 🎯 Interview Value
+---
 
-This project demonstrates:
-- ✅ Clean Architecture implementation
-- ✅ Domain-Driven Design principles
-- ✅ Financial transaction safety
-- ✅ Optimistic concurrency handling
-- ✅ Real trading workflows
-- ✅ Production-ready security
-- ✅ Comprehensive API design
+## License
 
-**Significantly stronger than typical CRUD projects.**
-
-## 📝 License
-
-MIT License - feel free to use for learning and interviews.
-
+MIT — free to use for learning and reference.
