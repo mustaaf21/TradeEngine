@@ -37,3 +37,6 @@ packages/
 # Publish output
 publish/
 out/
+
+**/appsettings.Development.json
+secrets.json
